@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './TaskApp.css';
 
 class TaskApp extends Component {
   render() {
     return (
-      <div className="TaskApp">
-      </div>
+      <MuiThemeProvider>
+        <div className="TaskApp">
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
