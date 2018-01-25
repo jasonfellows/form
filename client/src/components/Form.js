@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog';
 import map from 'lodash/map'
+import Paper from 'material-ui/Paper';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
@@ -54,7 +55,8 @@ class Form extends Component {
 
   render () {
     return (
-      <div className="Form">
+      <Paper className="Form">
+        <h3>Task Form</h3>
         <DateTimePicker
           autoOkTimePicker={true}
           clearIcon={null}
@@ -69,7 +71,7 @@ class Form extends Component {
           value={this.state.delivery_at}
         />
         {map(Object.keys(this.state.recipient), this.fieldToComponent)}
-      </div>
+      </Paper>
     );
   }
 }
