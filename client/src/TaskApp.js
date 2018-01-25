@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Form from './components/Form'
 import './TaskApp.css';
 
 class TaskApp extends Component {
@@ -7,6 +8,7 @@ class TaskApp extends Component {
     return (
       <MuiThemeProvider>
         <div className="TaskApp">
+          <Form />
         </div>
       </MuiThemeProvider>
     );
