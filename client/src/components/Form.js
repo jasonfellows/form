@@ -8,7 +8,16 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      delivery_at: null
+      delivery_at: null,
+      recipient: {
+        name: null,
+        street: null,
+        city: null,
+        state: null,
+        country: null,
+        zipcode: null,
+        phone: null
+      }
     };
   }
 
@@ -30,6 +39,7 @@ class Form extends Component {
           TimePicker={TimePickerDialog}
           value={this.state.delivery_at}
         />
+
       </div>
     );
   }
