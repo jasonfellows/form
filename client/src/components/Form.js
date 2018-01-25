@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DateTimePicker from 'material-ui-datetimepicker';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog';
 import map from 'lodash/map'
+import merge from 'lodash/merge'
 import Paper from 'material-ui/Paper';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
@@ -41,7 +42,7 @@ class Form extends Component {
       return <TextField
         floatingLabelText={this.fieldToLabel(field)}
         key={field}
-        onChange={this.setRecipientData}
+        onChange={this.setRecipientData(field)}
         value={this.state.recipient[field]}
       />
     }
@@ -49,8 +50,10 @@ class Form extends Component {
 
   setDeliveryAt = (dateTime) => this.setState({ delivery_at: dateTime })
 
-  setRecipientData () {
-    return null;
+  setRecipientData = (field) => (e) => {
+    this.setState(
+      merge({recipient: this.state.recipient}, {recipient: {[field]: e.target.value}})
+    );
   }
 
   render () {
