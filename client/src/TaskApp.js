@@ -4,11 +4,18 @@ import Form from './components/Form'
 import './TaskApp.css';
 
 class TaskApp extends Component {
+
+  handleSubmit = (data) => (event) => {
+    console.log(data)
+  }
+
   render() {
     return (
       <MuiThemeProvider>
         <div className="TaskApp">
-          <Form />
+          <Form
+            onSubmit={this.handleSubmit}
+          />
         </div>
       </MuiThemeProvider>
     );

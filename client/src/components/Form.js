@@ -5,6 +5,7 @@ import map from 'lodash/map'
 import MenuItem from 'material-ui/MenuItem';
 import merge from 'lodash/merge'
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 import TimePickerDialog from 'material-ui/TimePicker/TimePickerDialog';
@@ -76,6 +77,13 @@ class Form extends Component {
     }
   }
 
+  formData () {
+    return {
+      delivery_at: this.state.delivery_at,
+      recipient: this.state.recipient
+    };
+  }
+
   mergeRecipientValue(field, value) {
     this.setState(
       merge({recipient: this.state.recipient}, {recipient: {[field]: value}})
@@ -106,6 +114,12 @@ class Form extends Component {
           value={this.state.delivery_at}
         />
         {map(Object.keys(this.state.recipient), this.fieldToComponent)}
+        <RaisedButton
+          className="submit-button"
+          label="Submit"
+          onClick={this.props.onSubmit(this.formData())}
+          primary={true}
+        />
       </Paper>
     );
   }
