@@ -2,8 +2,13 @@
 
 ## Running the project
 
+Within the directory where you want to install the app:
+
 ```
+git clone https://github.com/jasonfellows/form.git
+cd form
 npm i nodemon -g
+npm i concurrently -g
 yarn
 yarn dev
 ```
