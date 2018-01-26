@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import Form from './components/Form'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
@@ -9,6 +11,7 @@ class TaskApp extends Component {
     super(props);
     this.state = {
       countries: [],
+      error: null,
       saving: false,
       successSnackbarOpen: false,
     };
@@ -27,7 +30,9 @@ class TaskApp extends Component {
     })
   }
 
-  handleError () { return null; }
+  closeErrorDialog = () => this.setState({error: null})
+
+  closeSuccessSnackbar = () => this.setState({successSnackbarOpen: false})
 
   handleSubmit = (data) => (event) => {
     this.setState({saving: true});
@@ -41,15 +46,13 @@ class TaskApp extends Component {
       if (response.ok) {
         this.setState({successSnackbarOpen: true})
       }
-      this.handleError();
-    }).catch(function(error) {
-      this.handleError();
+      return response.text()
+    }).then((errorMessage) => {
+      this.setState({error: JSON.parse(errorMessage)["error"]});
+    }).catch((error) => {
+      this.setState({error: error});
     })
   }
-
-  handleSuccess () { return null; }
-
-  closeSuccessSnackbar = () => this.setState({successSnackbarOpen: false})
 
   render() {
     return (
@@ -69,6 +72,21 @@ class TaskApp extends Component {
             open={this.state.successSnackbarOpen}
             onRequestClose={this.closeSuccessSnackbar}
           />
+          <Dialog
+            modal={false}
+            open={this.state.error != null}
+            style={{textAlign: "center"}}
+          >
+            <div>
+              Error saving: {this.state.error}
+            </div>
+            <FlatButton
+              label="Ok"
+              primary={true}
+              onClick={this.closeErrorDialog}
+              style={{marginTop: "20px"}}
+            />
+          </Dialog>
         </div>
       </MuiThemeProvider>
     );
