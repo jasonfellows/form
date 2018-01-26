@@ -24,6 +24,18 @@ class Form extends Component {
         country: "",
         zipcode: "",
         phone: ""
+      },
+      errors: {
+        delivery_at: null,
+          recipient: {
+          name: null,
+          street: null,
+          city: null,
+          state: null,
+          country: null,
+          zipcode: null,
+          phone: null
+        },
       }
     };
 
@@ -59,8 +71,10 @@ class Form extends Component {
       );
     } else {
       return <TextField
+        errorText={this.state.errors[field]}
         floatingLabelText={this.fieldToLabel(field)}
         key={field}
+        onBlur={this.validateField(field)}
         onChange={this.setRecipientData(field)}
         value={this.state.recipient[field]}
       />
@@ -76,7 +90,20 @@ class Form extends Component {
 
   mergeRecipientValue(field, value) {
     this.setState(
-      merge({recipient: this.state.recipient}, {recipient: {[field]: value}})
+      merge(
+        {
+          recipient: this.state.recipient,
+          errors: this.state.errors
+        },
+        {
+          recipient: {
+            [field]: value
+          },
+          errors: {
+            [field]: null
+          }
+        }
+      )
     );
   }
 
@@ -85,6 +112,21 @@ class Form extends Component {
   setDeliveryAt = (dateTime) => this.setState({ delivery_at: dateTime })
 
   setRecipientData = (field) => (event) => this.mergeRecipientValue(field, event.target.value)
+
+  validateField = (field) => (event) => {
+    if (event.target.value === "") {
+      this.setState(
+        merge(
+          {errors: this.state.errors},
+          {
+            errors: {
+              [field]: "This field is required"
+            }
+          }
+        )
+      )
+    }
+  }
 
   render () {
     return (
