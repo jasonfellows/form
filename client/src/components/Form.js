@@ -24,17 +24,7 @@ class Form extends Component {
         country: "",
         zipcode: "",
         phone: ""
-      },
-      countries: [
-        {
-          id: "germany",
-          name: "Germany"
-        },
-        {
-          "id": "netherlands",
-          "name": "Netherlands"
-        }
-      ]
+      }
     };
 
     this.fieldToComponent = this.fieldToComponent.bind(this);
@@ -64,7 +54,7 @@ class Form extends Component {
           onChange={this.setCountry(field)}
           value={this.state.recipient[field]}
         >
-          {this.countryItems(this.state.countries)}
+          {this.countryItems(this.props.countries)}
         </SelectField>
       );
     } else {
