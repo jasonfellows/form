@@ -9,7 +9,8 @@ class TaskApp extends Component {
     super(props);
     this.state = {
       countries: [],
-      saving: false
+      saving: false,
+      successSnackbarOpen: false,
     };
   }
 
@@ -38,7 +39,7 @@ class TaskApp extends Component {
     }).then((response) => {
       this.setState({saving: false});
       if (response.ok) {
-        this.handleSuccess();
+        this.setState({successSnackbarOpen: true})
       }
       this.handleError();
     }).catch(function(error) {
@@ -47,6 +48,8 @@ class TaskApp extends Component {
   }
 
   handleSuccess () { return null; }
+
+  closeSuccessSnackbar = () => this.setState({successSnackbarOpen: false})
 
   render() {
     return (
@@ -57,8 +60,14 @@ class TaskApp extends Component {
             onSubmit={this.handleSubmit}
           />
           <Snackbar
-            open={this.state.saving}
             message="Saving task..."
+            open={this.state.saving}
+          />
+          <Snackbar
+            autoHideDuration={4000}
+            message="Task saved successfully."
+            open={this.state.successSnackbarOpen}
+            onRequestClose={this.closeSuccessSnackbar}
           />
         </div>
       </MuiThemeProvider>
