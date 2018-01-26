@@ -15,8 +15,7 @@ app.get('/tasks', (req, res) => {
 
 app.post('/tasks', (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "POST");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
 
   const { body } = req;
 
@@ -58,9 +57,14 @@ app.post('/tasks', (req, res) => {
 
 app.get('/countries', (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "GET");
   res.json(countries);
+});
+
+app.options("/*", function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "GET,POST");
+  return next();
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

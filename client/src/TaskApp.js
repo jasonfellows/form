@@ -14,21 +14,34 @@ class TaskApp extends Component {
   componentDidMount () {
     fetch("http://localhost:5000/countries")
     .then(function(response) {
-      console.log(response.body)
       if (response.ok) {
         return response.json();
       }
-      throw new Error('There was an error');
-    }).then((data) => {
-      this.setState({countries: data})
-    }).catch(function(error) {
+      console.log('Error fetching countries');
+    }).then((data) => this.setState({countries: data})
+    ).catch(function(error) {
       console.log('Fetch error: ', error.message);
     })
   }
 
+  handleError () { return null; }
+
   handleSubmit = (data) => (event) => {
-    console.log(data)
+    fetch("http://localhost:5000/tasks", {
+      method: "post",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(data)
+    }).then((response) => {
+      if (response.ok) {
+        this.handleSuccess();
+      }
+      this.handleError();
+    }).catch(function(error) {
+      this.handleError();
+    })
   }
+
+  handleSuccess () { return null; }
 
   render() {
     return (
